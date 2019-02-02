@@ -41,3 +41,20 @@ At startup the container will set up the ssh deamon then you should be able to s
 scp myapp.apk fdroid@myserver:~/
 
 ```
+
+Future archive structure:
+=========================
+
+In the next version this engine will support ZIP archive as input file.
+If an archive is detected in the /opt/apk directory then it will be installed in the fdroid repository.
+
+Archive description:
+
+```
+application.zip
+  |-- application.apk
+  |-- metadata/
+        |-- images/
+        |      |-- screen.png
+        |-- metadata.json
+```
