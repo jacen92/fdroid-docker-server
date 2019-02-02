@@ -1,1 +1,4 @@
 **.orig
+apk/
+default/authorized_keys
+default/auth.txt

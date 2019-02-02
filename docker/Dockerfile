@@ -1,8 +1,8 @@
 FROM debian:stretch
 
-LABEL Version="0.2"
+LABEL Version="0.3"
 LABEL Maintainer="Nicolas Gargaud <jacen92@gmail.com>"
-LABEL Description="Simple fdroid repository"
+LABEL Description="Simple standalone fdroid repository"
 
 ENV CONFIG_PY=config.py
 ENV CONFIG_IN_PY=config.in.py
@@ -16,14 +16,19 @@ ENV ENTRY_INTERNAL_PATH=/usr/bin/entrypoint.sh
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update \
   && apt-get install -y apt-utils aapt nano htop wget python inotify-tools nginx fdroidserver \
+     rssh openssh-server \
   && rm -rf /var/lib/apt/lists/ \
-  && cd "/var/www/html" && fdroid init && fdroid update -c && fdroid update
+  && mkdir /var/run/sshd && cd "/var/www/html" && fdroid init && fdroid update -c && fdroid update
 
-EXPOSE 80
+# Use ssh restricted to scp to send apk to the shared directory
+# https://www.interserver.net/tips/kb/install-setup-rssh-scponly/
+#
+RUN useradd -m -d "/home/fdroid" -s /usr/bin/rssh fdroid
+RUN sed -i -E 's/(.*)PermitRootLogin (.*)/PermitRootLogin no/' /etc/ssh/sshd_config
+RUN sed -i -E 's/(.*)allowscp(.*)/allowscp/' /etc/rssh.conf
+
 COPY entrypoint.sh "$ENTRY_INTERNAL_PATH"
-COPY default/$CONFIG_IN_PY "$HTML_INTERNAL_PATH/$CONFIG_IN_PY"
-RUN chmod 0600 "$HTML_INTERNAL_PATH/$CONFIG_IN_PY" && chmod 0740 "$ENTRY_INTERNAL_PATH" \
-  && mkdir "$APK_EXTERNAL_PATH" && mkdir "$CONFIG_EXTERNAL_PATH" \
-  && cd "$HTML_INTERNAL_PATH" && python $CONFIG_IN_PY
+RUN chmod 0740 "$ENTRY_INTERNAL_PATH" && mkdir "$CONFIG_EXTERNAL_PATH" && cd "$HTML_INTERNAL_PATH"
+EXPOSE 80 22
 VOLUME ["$APK_EXTERNAL_PATH", "$CONFIG_EXTERNAL_PATH"]
 ENTRYPOINT "$ENTRY_INTERNAL_PATH"
