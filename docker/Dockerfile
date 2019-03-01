@@ -1,6 +1,6 @@
 FROM debian:stretch
 
-LABEL Version="0.3"
+LABEL Version="0.4"
 LABEL Maintainer="Nicolas Gargaud <jacen92@gmail.com>"
 LABEL Description="Simple standalone fdroid repository"
 

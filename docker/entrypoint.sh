@@ -17,8 +17,9 @@ fi
 # If an ssh key file is provided then copy, reset configuration and the directory to watch
 if [ -f "$CONFIG_EXTERNAL_PATH/authorized_keys" ]; then
   echo "Copy fdroid scp keys"
-  mkdir /home/fdroid/.ssh
+  mkdir -p /home/fdroid/.ssh
   cp "$CONFIG_EXTERNAL_PATH/authorized_keys" /home/fdroid/.ssh/authorized_keys
+  chown -R fdroid: /home/fdroid
   sed -i -E 's/(.*)PubkeyAuthentication (.*)/PubkeyAuthentication yes/' /etc/ssh/sshd_config
   export APK_DIR_TO_WATCH="/home/fdroid"
 else
