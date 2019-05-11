@@ -50,8 +50,9 @@ else
   echo "No custom keystore.jks file found in $CONFIG_EXTERNAL_PATH"
 fi
 
-# Copy persistant apk files
+# Copy persistant apk files from persistant and home directories
 echo "Copy apks from $APK_EXTERNAL_PATH"
+find "/home/fdroid" -name '*.apk' -exec cp '{}' "$APK_EXTERNAL_PATH/" \;
 find "$APK_EXTERNAL_PATH" -name '*.apk' -exec cp '{}' "$HTML_INTERNAL_PATH/repo/" \;
 
 # Load fdroid server metadata from existing apk

@@ -1,6 +1,6 @@
 FROM arm32v7/debian:stretch
 
-LABEL Version="0.4"
+LABEL Version="0.5"
 LABEL Maintainer="Nicolas Gargaud <jacen92@gmail.com>"
 LABEL Description="Simple standalone fdroid repository"
 

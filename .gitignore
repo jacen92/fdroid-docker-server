@@ -1,4 +1,5 @@
 **.orig
-apk/
-default/authorized_keys
-default/auth.txt
+**.apk
+docker/apk/
+docker/default/authorized_keys
+docker/default/auth.txt
