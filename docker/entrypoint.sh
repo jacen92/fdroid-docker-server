@@ -64,11 +64,10 @@ nginx -g 'daemon off;' & /usr/sbin/sshd
 
 # TODO: find smarter way to achieve that...
 echo "Monitoring $APK_DIR_TO_WATCH directory"
-inotifywait -m "$APK_DIR_TO_WATCH" -e create -e moved_to |
+inotifywait -m "$APK_DIR_TO_WATCH" -e close_write |
     while read path action file; do
         echo "The file '$file' appeared in directory '$path' via '$action'"
         if [ "${file: -4}" == ".apk" ]; then
-          sleep 10
           cp "$path$file" "$HTML_INTERNAL_PATH/repo/$file"
           cd "$HTML_INTERNAL_PATH" && fdroid update -c && fdroid update && cd -
           # Backup in persistant directory if using scp
