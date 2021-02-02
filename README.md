@@ -7,11 +7,10 @@ This fdroid server is exposed in the container port 80.
 How to build it:
 
 ```
+mkdir -p /opt/fdroid/config && cp docker/default/auth_template.txt /opt/fdroid/config/auth.txt
 cd docker
 docker build --rm -t fdroid -f Dockerfile .
-# or to build the arm image:
-docker build --rm -t fdroid -f Dockerfile.arm .
-
+docker run --rm -p 8000:80 -p 2222:22 -v /opt/fdroid/config:/opt/config --name fdroid fdroid
 ```
 
 Customize config:
