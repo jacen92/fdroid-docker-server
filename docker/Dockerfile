@@ -15,9 +15,10 @@ ENV ENTRY_INTERNAL_PATH=/usr/bin/entrypoint.sh
 
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update \
-  && apt-get install -y software-properties-common aapt nano htop wget python3 python3-pip inotify-tools nginx fdroidserver openssh-server \
+  && apt-get install -y software-properties-common aapt nano htop wget python3 python3-pip inotify-tools nginx openssh-server \
   && rm -rf /var/lib/apt/lists/ \
-  && mkdir /var/run/sshd && cd "/var/www/html" && fdroid init && fdroid update -c && fdroid update
+#  && cd "/var/www/html" && fdroid init && fdroid update -c && fdroid update \
+  && mkdir /var/run/sshd
 
 # Use ssh restricted to scp to send apk to the shared directory
 # https://www.interserver.net/tips/kb/install-setup-rssh-scponly/

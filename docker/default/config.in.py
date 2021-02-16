@@ -35,7 +35,7 @@ if __name__ == "__main__":
     """
         This script update the config.py script of fdroid with custom parameters.
     """
-    config_py = os.path.join(os.environ.get("HTML_INTERNAL_PATH"), os.environ.get("CONFIG_PY"))
+    config_py = os.path.join(os.environ.get("INTERNAL_HTML_PATH"), os.environ.get("CONFIG_PY"))
     print("Merge this file content to {}".format(config_py))
     repo_url = os.environ.get("REPO_URL")
     repo_name = os.environ.get("REPO_NAME")
