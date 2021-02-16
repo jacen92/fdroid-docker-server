@@ -1,6 +1,6 @@
-FROM debian:buster
+FROM ubuntu:20.04
 
-LABEL Version="0.6"
+LABEL Version="1.0"
 LABEL Maintainer="Nicolas Gargaud <jacen92@gmail.com>"
 LABEL Description="Simple standalone fdroid repository"
 
