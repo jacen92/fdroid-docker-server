@@ -1,1 +1,1 @@
-fdroid:fdroid
+fdroid_deploy:fdroid_password

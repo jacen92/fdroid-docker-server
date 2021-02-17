@@ -7,10 +7,17 @@ This fdroid server is exposed in the container port 80.
 How to build it:
 
 ```
-mkdir -p /opt/fdroid/config && cp docker/default/auth_template.txt /opt/fdroid/config/auth.txt
+mkdir -p /opt/volumes/fdroid/config && cp docker/default/auth_template.txt /opt/volumes/fdroid/config/auth.txt
+mkdir /opt/volumes/fdroid/apks
 cd docker
-docker build --rm -t fdroid -f Dockerfile .
-docker run --rm -p 8000:80 -p 2222:22 -v /opt/fdroid/config:/opt/config --name fdroid fdroid
+docker build --rm -t dev_fdroid -f Dockerfile .
+docker run --rm -p 8000:80 -p 2222:22 -v /opt/fdroid/config:/opt/config --name fdroid dev_fdroid
+# dev:
+docker run -ti --rm -p 8000:80 -p 2222:22 -v /opt/volumes/fdroid/config:/opt/config -v /opt/volumes/fdroid/apks:/opt/apk --name fdroid dev_fdroid
+# check ssh connection;
+ssh fdroid_deploy@localhost -p 2222
+# send apk to ssh server:
+scp -P 2222 android-app.apk fdroid_deploy@localhost:/opt/apk
 ```
 
 Customize config:
